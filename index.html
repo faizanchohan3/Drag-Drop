@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styl.css" />
+    <title>Drag and drop</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="left">
+        <div class="list" draggable="true">
+          <img src="icon.png" />List Item 1
+        </div>
+
+        <div class="list" draggable="true">
+          <img src="icon.png" />List Item 2
+        </div>
+
+        <div class="list" draggable="true">
+          <img src="icon.png" />List Item 3
+        </div>
+
+        <div class="list" draggable="true">
+          <img src="icon.png" />List Item 4
+        </div>
+
+        <div class="list" draggable="true">
+          <img src="icon.png" />List Item 5
+        </div>
+      </div>
+      <div id="right"></div>
+    </div>
+    <script>
+      let List = document.getElementsByClassName("list");
+      let rightbox = document.getElementById("right");
+      let leftbox = document.getElementById("left");
+      let op1 = rightbox.innerHTML;
+                let op2 = leftbox.innerHTML;
+                let cardPosition = op1 + op2; 
+      for (let list of List) {
+        list.addEventListener("dragstart", function (e) {
+            console.log(e)
+          let slctd = e.target;
+          rightbox.addEventListener("dragover", function (e) {
+            e.preventDefault();
+          });
+          rightbox.addEventListener("drop", function (e) {
+            rightbox.appendChild(slctd);
+            slctd = null;
+            savdata();
+          });
+          leftbox.addEventListener("dragover", function (e) {
+            e.preventDefault();
+          });
+          leftbox.addEventListener("drop", function (e) {
+            leftbox.appendChild(slctd);
+            slctd = null;
+            savdata();
+          });
+        });
+      }
+      function savdata(){
+        localStorage.setItem("data",rightbox.innerHTML,leftbox.innerHTML);
+      }
+      function shodata(){
+    leftbox.innerHTML=localStorage.getItem("data");
+    rightbox.innerHTML=localStorage.getItem("data");
+      }
+    </script>
+  </body>
+</html>
